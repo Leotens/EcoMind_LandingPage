@@ -111,8 +111,8 @@ header {
 }
 
 main {
-  margin-top: 90px;
-  padding: 20px 40px;
+  margin-top: var(--header-h); 
+  padding: 0;
 }
 
 section {
@@ -122,8 +122,87 @@ section {
   color: #333;
 }
 
+section.hero {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hero {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  min-height: clamp(660px, 72vh, 780px);
+}
+
+.hero__img{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  filter: brightness(.75);
+}
 
 
+/* Tarjeta vidrio */
+.hero__glass {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 24px;
+  padding: clamp(20px, 4vw, 36px) clamp(20px, 4vw, 48px);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  color: #fff;
+  text-align: center;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+}
 
+/* Texto */
+.hero__glass h1 {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+/* Botón */
+.btn-primario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--verde);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(38, 154, 68, 0.35);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn-primario:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.95);
+}
+
+/* Ola inferior */
+.hero__wave{ position:absolute; left:0; right:0; bottom:-1px; height:100px; line-height:0; }
+.hero__wave svg{ width:100%; height:100%; display:block; }
+
+.hero__wave svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+html, body {
+  overflow-x: hidden;
+}
 
 
