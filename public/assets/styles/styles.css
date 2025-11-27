@@ -2023,6 +2023,600 @@ body.dashboard-body {
   background: #5a8f47;
 }
 
+/* =========================================
+   ESTILOS COMPLETOS PESTAÑA RETOS (GAME DASHBOARD)
+   ========================================= */
+
+/* 1. Layout Principal */
+.retos-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px; /* Columna central flexible | Columna derecha fija */
+  gap: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+  align-items: start;
+  justify-content: center;
+}
+
+/* 2. Columna Central (Área de Juego) */
+.retos-center-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Barra Superior (Energía) */
+.btn-game-header {
+  width: 85%;        /* Ancho idéntico */
+  font-size: 1.3rem; /* Tamaño de letra idéntico */
+  padding: 1rem;     /* Altura idéntica */
+  
+  /* El resto se mantiene igual */
+  background: linear-gradient(180deg, #FDD85D 0%, #FFC107 100%);
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 6px 0 #E0A800, 0 10px 20px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.btn-game-header:active {
+  transform: translateY(6px); /* Efecto de presión */
+  box-shadow: 0 0 0 #E0A800, inset 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* 3. Grid de los 4 Botones de Imagen */
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 Columnas */
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Estilo del contenedor del botón de imagen */
+.btn-game-img {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* Animación de rebote suave */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  position: relative;
+}
+
+/* Estilo de la imagen dentro del botón */
+.btn-game-img img {
+  /* CAMBIO AQUÍ: De 100% a 85% (o el valor que prefieras) */
+  width: 80%; 
+  height: auto;
+  display: block;
+  /* Sombra suave debajo de la imagen para dar profundidad */
+  filter: drop-shadow(0 8px 15px rgba(0,0,0,0.15));
+  transition: filter 0.3s, transform 0.3s;
+}
+
+/* Hover: El botón flota hacia arriba y crece un poco */
+.btn-game-img:hover {
+  transform: translateY(-5px) scale(1.03);
+}
+
+.btn-game-img:hover img {
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.2));
+}
+
+/* Active: El botón se presiona */
+.btn-game-img:active {
+  transform: translateY(3px) scale(0.95);
+  transition: transform 0.1s;
+}
+
+/* Active: La sombra se reduce al presionar */
+.btn-game-img:active img {
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+}
+
+/* Separador de puntos */
+.dots-separator {
+  color: #BDBDBD;
+  font-size: 2rem;
+  letter-spacing: 5px;
+  font-weight: 900;
+  margin: 0.5rem 0;
+}
+
+/* Barra Inferior (Aprende más) */
+.btn-game-footer {
+  width: 85%;        /* Ancho idéntico */
+  font-size: 1.3rem; /* Tamaño de letra idéntico */
+  padding: 1rem;     /* Altura idéntica */
+  
+  /* El resto se mantiene igual */
+  background: linear-gradient(180deg, #64C0FF 0%, #40A9FF 100%);
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 6px 0 #2183D4, 0 10px 20px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  margin-top: 10px;
+}
+
+.btn-game-footer:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #2183D4;
+}
+
+/* 4. Columna Derecha (Widgets) */
+.retos-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.widget-card {
+  background: white;
+  border-radius: 25px; /* Bordes muy redondeados como el diseño */
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06); /* Sombra muy suave */
+  text-align: center;
+  border: 1px solid #f8f8f8;
+}
+
+/* Widget Racha */
+.racha-widget h3 {
+  color: #69A44E;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.racha-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.racha-icon-small { 
+  width: 45px; 
+  height: auto; 
+}
+
+.racha-val { 
+  font-size: 3rem; 
+  font-weight: 700; 
+  color: #555; 
+  line-height: 1; 
+  letter-spacing: -1px;
+}
+
+.divider-line {
+  height: 2px;
+  background: #f0f0f0;
+  margin: 15px 10px;
+  border-radius: 2px;
+}
+
+.ranking-display {
+  color: #888;
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.trophy { color: #FFC107; font-size: 1.2rem;}
+
+/* Widget Progreso */
+.progreso-widget {
+  padding: 2rem 1.2rem 1.5rem 1.2rem;
+  position: relative; /* Para posicionar la píldora flotante */
+}
+
+.progreso-pill {
+  background: #69A44E; /* Verde EcoMind */
+  color: white;
+  display: inline-block;
+  padding: 6px 24px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  /* Posicionamiento flotante */
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 10px rgba(105, 164, 78, 0.4);
+}
+
+.progreso-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+}
+
+.progreso-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.p-info span {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.p-bar-bg {
+  width: 100%;
+  height: 10px; /* Barra delgada */
+  background: #EAEAEA;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.p-bar-fill {
+  height: 100%;
+  background: #76C05F; /* Verde claro */
+  border-radius: 10px;
+}
+
+.btn-ver-mas-small {
+  margin-top: 25px;
+  background: #DFFFD6;
+  color: #4C9E38;
+  border: none;
+  padding: 8px 25px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-ver-mas-small:hover {
+  background: #cbfebf;
+}
+
+/* 5. Responsive (Móvil) */
+@media (max-width: 900px) {
+  .retos-layout {
+    grid-template-columns: 1fr; /* Una sola columna */
+    gap: 2rem;
+  }
+  
+  .retos-right-col {
+    order: -1; /* Muestra la racha arriba en móviles (opcional) */
+    flex-direction: row; /* Pone Racha y Progreso uno al lado del otro */
+  }
+  
+  .widget-card {
+    flex: 1;
+  }
+  
+  .game-grid {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .retos-right-col {
+    flex-direction: column; /* Vuelve a columna en pantallas muy pequeñas */
+  }
+}
+
+/* =========================================
+   ESTILOS WIDGETS DERECHA (RACHA Y PROGRESO)
+   ========================================= */
+
+.retos-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Separación entre las dos tarjetas */
+}
+
+.widget-card {
+  background: white;
+  border-radius: 30px; /* Bordes muy redondeados */
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra suave */
+  text-align: center;
+  border: none;
+  position: relative;
+}
+
+/* --- Widget Racha --- */
+.racha-widget {
+  padding-bottom: 2rem;
+}
+
+.racha-widget h3 {
+  color: #69A44E; /* Verde título */
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.racha-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.racha-icon-small {
+  width: 50px; /* Ajusta según tu imagen */
+  height: auto;
+}
+
+.racha-val {
+  font-size: 3.5rem; /* Número grande */
+  font-weight: 800;
+  color: #5D9642; /* Verde un poco más oscuro para el número */
+  line-height: 1;
+}
+
+.divider-line {
+  width: 80%;
+  height: 2px;
+  background: #E0E0E0;
+  margin: 0 auto 15px auto;
+  border-radius: 2px;
+}
+
+.ranking-display {
+  font-size: 1.1rem;
+  color: #999;
+  font-weight: 500;
+}
+
+.trophy {
+  color: #FBC02D; /* Color dorado */
+  font-size: 1.3rem;
+  margin-right: 5px;
+}
+
+
+/* --- Widget Progreso --- */
+.progreso-widget {
+  padding-top: 2.5rem; /* Espacio extra arriba para la píldora flotante */
+  padding-bottom: 1.5rem;
+}
+
+.progreso-pill {
+  background: linear-gradient(180deg, #74B558 0%, #5E9944 100%); /* Degradado verde */
+  color: white;
+  display: inline-block;
+  padding: 8px 30px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  
+  /* Posicionamiento flotante */
+  position: absolute;
+  top: -18px; /* Sube la píldora para que quede mitad afuera */
+  left: 20px; /* Alineada a la izquierda como en la imagen */
+  
+  /* Sombra 3D */
+  box-shadow: 0 4px 0 #4B7A36, 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.progreso-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.progreso-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.p-info span {
+  font-size: 0.8rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.p-bar-bg {
+  width: 100%;
+  height: 14px; /* Barra gruesa */
+  background: #EEEEEE;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.p-bar-fill {
+  height: 100%;
+  background: #7BC558; /* Verde claro vibrante */
+  border-radius: 10px;
+}
+
+.btn-ver-mas-small {
+  background: #E0F8D6; /* Fondo verde muy pálido */
+  color: #5D9642; /* Texto verde */
+  border: none;
+  padding: 8px 20px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.btn-ver-mas-small:hover {
+  background: #d0f0c0;
+}
+
+
+/* =========================================
+   ESTILOS DEL OVERLAY "APRENDE MÁS"
+   ========================================= */
+
+/* Contenedor principal del overlay (fondo borroso) */
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85); /* Fondo blanco semitransparente */
+  backdrop-filter: blur(5px); /* Efecto borroso */
+  z-index: 100; /* Por encima de todo */
+  
+  /* Flex para centrar */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px; /* Coincide con el borde del dashboard */
+  
+  /* Estado inicial: Oculto */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+/* Clase para mostrar el overlay */
+.overlay-container.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  /* CAMBIO 1: Aumentamos la separación vertical de 1.2rem a 2.5rem */
+  gap: 2.5rem; 
+  width: 100%;
+  /* CAMBIO 2: Agregamos un ancho máximo. 
+     Esto evita que los botones se estiren por toda la pantalla.
+     Al tener los botones un width del 85%, ahora será el 85% de estos 600px,
+     haciendo que coincidan visualmente con los otros. */
+  max-width: 600px; 
+  align-items: center;
+  position: relative;
+  z-index: 101;
+}
+
+/* --- ESTILOS COMUNES DE LOS BOTONES DE CATEGORÍA --- */
+.btn-category {
+  width: 85%;        /* Ancho estandarizado */
+  font-size: 1.3rem;
+  padding: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: transform 0.1s, box-shadow 0.1s;
+  
+  /* Animación de entrada */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Animación cuando el overlay se activa */
+.overlay-container.active .btn-category {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Retrasos para efecto escalera (uno por uno) */
+.overlay-container.active .btn-category:nth-child(1) { transition-delay: 0.05s; }
+.overlay-container.active .btn-category:nth-child(2) { transition-delay: 0.1s; }
+.overlay-container.active .btn-category:nth-child(3) { transition-delay: 0.15s; }
+.overlay-container.active .btn-category:nth-child(4) { transition-delay: 0.2s; }
+.overlay-container.active .btn-category:nth-child(5) { transition-delay: 0.25s; }
+
+/* Efecto al presionar */
+.btn-category:active {
+  transform: scale(0.98) !important;
+}
+
+/* --- COLORES ESPECÍFICOS --- */
+
+/* Energía (Amarillo - Igual al header) */
+.btn-cat-energia {
+  background: linear-gradient(180deg, #FDD85D 0%, #FFC107 100%);
+  box-shadow: 0 6px 0 #E0A800, 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Agua (Azul Cielo) */
+.btn-cat-agua {
+  background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+  box-shadow: 0 6px 0 #2E8BC0, 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Reciclaje (Verde Claro) */
+.btn-cat-reciclaje {
+  background: linear-gradient(180deg, #6BE285 0%, #46CE65 100%);
+  box-shadow: 0 6px 0 #2E9646, 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Reto Diario (Naranja Intenso) */
+.btn-cat-reto {
+  background: linear-gradient(180deg, #FF7E5F 0%, #FEB47B 100%); /* Naranja atardecer */
+  /* O un rojo más solido si prefieres: */
+  background: linear-gradient(180deg, #ff6b4a 0%, #ff3b14 100%);
+  box-shadow: 0 6px 0 #C42605, 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Buscar (Verde Oliva/Musgo) */
+.btn-cat-buscar {
+  background: linear-gradient(180deg, #84B566 0%, #5D9142 100%);
+  box-shadow: 0 6px 0 #436B2E, 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Área para cerrar al hacer clic fuera (opcional) */
+.close-trigger {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 90;
+}
+
 /* Pestaña Favoritos */
 /* Tags de Filtro */
 .favoritos-tags {
@@ -2316,6 +2910,116 @@ body.dashboard-body {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+}
+
+/* =========================================
+   ESTILOS DE LA VISTA DE BÚSQUEDA
+   ========================================= */
+
+.retos-search-layout {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación suave al aparecer */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Barra de búsqueda */
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  background-color: #EBEBEB; /* Color gris claro de fondo */
+  border-radius: 50px;
+  padding: 0.8rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  opacity: 0.5;
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #666;
+}
+
+.search-icon-right {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Contenedor de Tags */
+.search-tags-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.search-tag {
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.search-tag:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.tag-close {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 3px;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+/* Colores específicos de los tags */
+.tag-yellow {
+  background-color: #FFC940; /* Amarillo anaranjado */
+}
+
+.tag-green {
+  background-color: #7BC558; /* Verde claro */
+}
+
+/* Espacio vacío (Placeholder) */
+.search-results-grid-placeholder {
+  width: 100%;
+  min-height: 60vh; /* Ocupa el espacio vertical restante */
+  /* Borde punteado temporal solo para que veas el espacio ocupado (opcional) */
+  /* border: 2px dashed #e0e0e0; */
+  border-radius: 20px;
 }
 
 /* =========================================================
