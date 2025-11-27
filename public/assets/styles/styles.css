@@ -2904,3 +2904,90 @@ body.dashboard-body {
     gap: 1rem;
   }
 }
+
+/* =========================================================
+    VISTA LOGROS DE COMUNIDAD
+   ========================================================= */
+
+.comunidad-page-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.logros-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.logro-card {
+  background: white;
+  border: 2px solid #69A44E;
+  border-radius: 60px;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.logro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(105, 164, 78, 0.2);
+}
+
+.logro-icon-container {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logro-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logro-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logro-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 0.3rem 0;
+}
+
+.logro-desc {
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Ajuste responsive para móviles */
+@media (max-width: 600px) {
+  .logro-card {
+    border-radius: 30px;
+    padding: 1.5rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .logro-icon-container {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0.5rem;
+  }
+}
