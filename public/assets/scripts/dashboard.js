@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Página inicial por defecto
-    showPage('ranking');
+    showPage('reto');
 
     // ==========================================
     // 2. PESTAÑAS DEL PERFIL
