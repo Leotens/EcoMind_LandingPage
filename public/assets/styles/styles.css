@@ -4802,3 +4802,10 @@ body.dashboard-body {
 #retos-actividad-view {
     min-height: 680px;
 }
+
+.actividad-instrucciones-inner {
+  width: 100%;
+  max-width: 900px;      /* aquí ajustas qué tan ancho quieres el contenido */
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}

@@ -302,15 +302,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (btnVolverRetos && actividadView && viewRetosMain) {
-        btnVolverRetos.addEventListener('click', () => {
-            // Cerramos actividad y volvemos a los retos
-            actividadView.style.display = 'none';
-            viewRetosMain.style.display = 'grid';
-            if (viewRetosSearch) viewRetosSearch.style.display = 'none';
-        });
-    }
-
     // ==========================================
     // 8. PANTALLAS DE LA ACTIVIDAD (detalle → yay → instrucciones)
     // ==========================================
@@ -384,27 +375,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // BOTÓN VOLVER EN EL MODO ACTIVIDAD
-    const btnVolverActividad = document.querySelector('.btn-volver-retos');
+    // Delegación global para todos los botones "Volver"
+    document.addEventListener('click', (event) => {
+      const volverBtn = event.target.closest('.btn-volver-retos');
+      if (!volverBtn) return; // si no es un botón de volver, no hacemos nada
 
-    if (btnVolverActividad) {
-        btnVolverActividad.addEventListener('click', () => {
+      // 👇 Ajusta estos ids/nombres a los que ya usas en tu código
+      const actividadView   = document.getElementById('retos-actividad-view');
+      const viewRetosMain   = document.getElementById('retos-main-view');
+      const viewRetosSearch = document.getElementById('retos-search-view');
 
-            // Apagar pantalla instrucciones
-            const screenInstr = document.getElementById('actividad-screen-instr');
-            const screenYay = document.getElementById('actividad-screen-yay');
-            const screenMain = document.getElementById('retos-actividad-view');
+      if (actividadView)   actividadView.style.display = 'none';
+      if (viewRetosMain)   viewRetosMain.style.display   = 'grid';
+      if (viewRetosSearch) viewRetosSearch.style.display = 'none';
 
-            if (screenInstr) screenInstr.classList.remove('active');
-            if (screenYay) screenYay.classList.remove('active');
+      // Volvemos siempre a la pantalla principal de la actividad (“detalle”)
+      if (typeof cambiarPantallaActividad === 'function') {
+        cambiarPantallaActividad('detalle');
+      }
 
-            // Regresar a la pantalla principal del reto
-            if (screenMain) screenMain.classList.add('active');
-
-            // Scroll al inicio para evitar quedarnos a mitad
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
+      // Opcional: scroll arriba
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
 
 });
