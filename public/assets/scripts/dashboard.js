@@ -70,15 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const textoActual = compromisoTextoModal.textContent.trim();
             textareaCompromiso.value = textoActual;
             textareaCompromiso.style.display = 'block';
-            textareaCompromiso.style.width = '100%';
-            textareaCompromiso.style.minHeight = '100px';
-            textareaCompromiso.style.border = 'none';
-            textareaCompromiso.style.background = 'transparent';
-            textareaCompromiso.style.resize = 'none';
-            textareaCompromiso.style.outline = 'none';
-            textareaCompromiso.style.fontFamily = 'Poppins, sans-serif';
-            textareaCompromiso.style.fontSize = '0.95rem';
-            textareaCompromiso.style.lineHeight = '1.5';
             compromisoTextoModal.style.display = 'none';
             textareaCompromiso.focus();
             if (charCount) {
@@ -274,13 +265,155 @@ document.addEventListener('DOMContentLoaded', function() {
     // Al hacer click en el botón "Retos" del sidebar, volvemos a la vista original
     const btnSidebarRetos = document.querySelector('.dash-item[data-page="retos"]');
 
+    // Al hacer click en "Buscar" dentro del menú overlay
+    if (btnBuscarOverlay && viewRetosMain && viewRetosSearch) {
+        btnBuscarOverlay.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // 1. Cerrar el overlay primero
+            if(overlayAprende) overlayAprende.classList.remove('active');
+
+            // 2. Ocultar la vista principal
+            viewRetosMain.style.display = 'none';
+
+            // 3. Mostrar la vista de búsqueda
+            viewRetosSearch.style.display = 'block';
+        });
+    }
+
+    // Al hacer click en el sidebar "Retos", volver a la vista principal
     if (btnSidebarRetos) {
         btnSidebarRetos.addEventListener('click', () => {
             if (viewRetosMain && viewRetosSearch) {
-                viewRetosSearch.style.display = 'none'; // Ocultar galería
-                viewRetosMain.style.display = 'grid';   // Mostrar botones principales
+                // Ocultar búsqueda
+                viewRetosSearch.style.display = 'none';
+                // Mostrar principal (usamos 'grid' porque así está en el CSS de .retos-layout)
+                viewRetosMain.style.display = 'grid';
+                actividadView.style.display = 'none';
+                viewRetosMain.style.display = 'grid';
+                if (viewRetosSearch) viewRetosSearch.style.display = 'none';
             }
         });
     }
+
+    // ==========================================
+    // 7. VISTA DETALLE DE ACTIVIDAD (retos-actividad-view)
+    // ==========================================
+    const actividadView = document.getElementById('retos-actividad-view');
+    const btnVolverRetos = document.getElementById('btn-volver-retos');
+
+    // Usaremos el PRIMER botón de la grilla como ejemplo para abrir la actividad
+    const primerRetoBtn = document.querySelector('.game-grid .btn-game-img');
+
+    if (primerRetoBtn && actividadView && viewRetosMain) {
+        primerRetoBtn.addEventListener('click', () => {
+            // Ocultamos la grilla de retos y la búsqueda
+            viewRetosMain.style.display = 'none';
+            if (viewRetosSearch) viewRetosSearch.style.display = 'none';
+
+            // Mostramos la vista de actividad
+            actividadView.style.display = 'block';
+
+            // Aseguramos que se vea la pantalla de detalle
+            cambiarPantallaActividad('detalle');
+        });
+    }
+
+    // ==========================================
+    // 8. PANTALLAS DE LA ACTIVIDAD (detalle → yay → instrucciones)
+    // ==========================================
+    const screenDetalle = document.getElementById('actividad-screen-detalle');
+    const screenYay = document.getElementById('actividad-screen-yay');
+    const screenInstr = document.getElementById('actividad-screen-instrucciones');
+    const btnIniciarActividad = document.getElementById('btn-iniciar-actividad');
+
+    function cambiarPantallaActividad(nombre) {
+        const screens = {
+            detalle: screenDetalle,
+            yay: screenYay,
+            instrucciones: screenInstr
+        };
+
+        Object.values(screens).forEach(s => {
+            if (s) s.classList.remove('active');
+        });
+
+        if (screens[nombre]) {
+            screens[nombre].classList.add('active');
+        }
+    }
+
+    if (btnIniciarActividad && screenDetalle && screenYay && screenInstr) {
+        btnIniciarActividad.addEventListener('click', () => {
+            // 1) Detalle → YAY
+            cambiarPantallaActividad('yay');
+
+            // 2) Después de un ratito → Instrucciones
+            setTimeout(() => {
+                cambiarPantallaActividad('instrucciones');
+            }, 1200); // milisegundos
+        });
+    }
+
+    // ==========================================
+    // 9. ACORDEÓN INVITAR AMIGOS / PARTICIPANTES
+    // ==========================================
+    const activityToggles = document.querySelectorAll('.js-activity-toggle');
+
+    activityToggles.forEach(header => {
+        header.addEventListener('click', () => {
+            const card = header.closest('.activity-card');
+            const body = card ? card.querySelector('.activity-card-body') : null;
+            const chevron = header.querySelector('.activity-chevron');
+
+            if (!body) return;
+
+            const isHidden = body.classList.toggle('is-hidden');
+            header.classList.toggle('is-open', !isHidden);
+
+            if (chevron) {
+                chevron.textContent = isHidden ? '˅' : '˄';
+            }
+        });
+    });
+
+    // ==========================================
+    // 10. BOTONES "INVITAR" → SE QUEDAN GRIS
+    // ==========================================
+    const btnsInvitar = document.querySelectorAll('.btn-invitar');
+
+    btnsInvitar.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (btn.classList.contains('btn-invitar-disabled')) {
+                return; // ya está deshabilitado
+            }
+            btn.textContent = 'Invitado';
+            btn.classList.add('btn-invitar-disabled');
+        });
+    });
+
+    // Delegación global para todos los botones "Volver"
+    document.addEventListener('click', (event) => {
+      const volverBtn = event.target.closest('.btn-volver-retos');
+      if (!volverBtn) return; // si no es un botón de volver, no hacemos nada
+
+      // 👇 Ajusta estos ids/nombres a los que ya usas en tu código
+      const actividadView   = document.getElementById('retos-actividad-view');
+      const viewRetosMain   = document.getElementById('retos-main-view');
+      const viewRetosSearch = document.getElementById('retos-search-view');
+
+      if (actividadView)   actividadView.style.display = 'none';
+      if (viewRetosMain)   viewRetosMain.style.display   = 'grid';
+      if (viewRetosSearch) viewRetosSearch.style.display = 'none';
+
+      // Volvemos siempre a la pantalla principal de la actividad (“detalle”)
+      if (typeof cambiarPantallaActividad === 'function') {
+        cambiarPantallaActividad('detalle');
+      }
+
+      // Opcional: scroll arriba
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
 
 });
