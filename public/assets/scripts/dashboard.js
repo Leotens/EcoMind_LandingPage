@@ -69,6 +69,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const textoActual = compromisoTextoModal.textContent.trim();
             textareaCompromiso.value = textoActual;
             textareaCompromiso.style.display = 'block';
+            textareaCompromiso.style.width = '100%';
+            textareaCompromiso.style.minHeight = '100px';
+            textareaCompromiso.style.border = 'none';
+            textareaCompromiso.style.background = 'transparent';
+            textareaCompromiso.style.resize = 'none';
+            textareaCompromiso.style.outline = 'none';
+            textareaCompromiso.style.fontFamily = 'Poppins, sans-serif';
+            textareaCompromiso.style.fontSize = '0.95rem';
+            textareaCompromiso.style.lineHeight = '1.5';
             compromisoTextoModal.style.display = 'none';
             textareaCompromiso.focus();
             if (charCount) {
@@ -264,30 +273,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Al hacer click en el botón "Retos" del sidebar, volvemos a la vista original
     const btnSidebarRetos = document.querySelector('.dash-item[data-page="retos"]');
 
-    // Al hacer click en "Buscar" dentro del menú overlay
-    if (btnBuscarOverlay && viewRetosMain && viewRetosSearch) {
-        btnBuscarOverlay.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // 1. Cerrar el overlay primero
-            if(overlayAprende) overlayAprende.classList.remove('active');
-
-            // 2. Ocultar la vista principal
-            viewRetosMain.style.display = 'none';
-
-            // 3. Mostrar la vista de búsqueda
-            viewRetosSearch.style.display = 'block';
-        });
-    }
-
-    // Al hacer click en el sidebar "Retos", volver a la vista principal
     if (btnSidebarRetos) {
         btnSidebarRetos.addEventListener('click', () => {
             if (viewRetosMain && viewRetosSearch) {
-                // Ocultar búsqueda
-                viewRetosSearch.style.display = 'none';
-                // Mostrar principal (usamos 'grid' porque así está en el CSS de .retos-layout)
-                viewRetosMain.style.display = 'grid';
+
+                viewRetosSearch.style.display = 'none'; // Ocultar galería
+                viewRetosMain.style.display = 'grid';   // Mostrar botones principales
                 actividadView.style.display = 'none';
                 viewRetosMain.style.display = 'grid';
                 if (viewRetosSearch) viewRetosSearch.style.display = 'none';
@@ -296,29 +287,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 7. VISTA DETALLE DE ACTIVIDAD (retos-actividad-view)
+    // 7. MOSTRAR VISTA DE ACTIVIDAD AL HACER CLICK EN UN RETO
     // ==========================================
+
     const actividadView = document.getElementById('retos-actividad-view');
     const btnVolverRetos = document.getElementById('btn-volver-retos');
-
-    // Usaremos el PRIMER botón de la grilla como ejemplo para abrir la actividad
     const primerRetoBtn = document.querySelector('.game-grid .btn-game-img');
 
-    if (primerRetoBtn && actividadView && viewRetosMain) {
+     if (primerRetoBtn && actividadView && viewRetosMain) {
         primerRetoBtn.addEventListener('click', () => {
             // Ocultamos la grilla de retos y la búsqueda
             viewRetosMain.style.display = 'none';
             if (viewRetosSearch) viewRetosSearch.style.display = 'none';
-
             // Mostramos la vista de actividad
             actividadView.style.display = 'block';
 
             // Aseguramos que se vea la pantalla de detalle
             cambiarPantallaActividad('detalle');
         });
-    }
+      }
 
-    // ==========================================
+    document.querySelectorAll('.btn-invitar').forEach(btn => {
+    btn.addEventListener('click', () => {
+        btn.classList.add('invited');
+        btn.textContent = "Invitado";
+      });
+    });
+
     // 8. PANTALLAS DE LA ACTIVIDAD (detalle → yay → instrucciones)
     // ==========================================
     const screenDetalle = document.getElementById('actividad-screen-detalle');
@@ -336,7 +331,6 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.values(screens).forEach(s => {
             if (s) s.classList.remove('active');
         });
-
         if (screens[nombre]) {
             screens[nombre].classList.add('active');
         }
@@ -381,9 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================================
     const btnsInvitar = document.querySelectorAll('.btn-invitar');
 
-    btnsInvitar.forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (btn.classList.contains('btn-invitar-disabled')) {
+    btnsInvitar.forEach(btn => {if (btn.classList.contains('btn-invitar-disabled')) {
                 return; // ya está deshabilitado
             }
             btn.textContent = 'Invitado';
@@ -391,28 +383,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Delegación global para todos los botones "Volver"
+    // BOTÓN VOLVER EN EL MODO ACTIVIDAD
     document.addEventListener('click', (event) => {
       const volverBtn = event.target.closest('.btn-volver-retos');
       if (!volverBtn) return; // si no es un botón de volver, no hacemos nada
 
-      // 👇 Ajusta estos ids/nombres a los que ya usas en tu código
-      const actividadView   = document.getElementById('retos-actividad-view');
+    const actividadView   = document.getElementById('retos-actividad-view');
       const viewRetosMain   = document.getElementById('retos-main-view');
       const viewRetosSearch = document.getElementById('retos-search-view');
-
-      if (actividadView)   actividadView.style.display = 'none';
+  if (actividadView)   actividadView.style.display = 'none';
       if (viewRetosMain)   viewRetosMain.style.display   = 'grid';
       if (viewRetosSearch) viewRetosSearch.style.display = 'none';
-
-      // Volvemos siempre a la pantalla principal de la actividad (“detalle”)
       if (typeof cambiarPantallaActividad === 'function') {
-        cambiarPantallaActividad('detalle');
-      }
-
-      // Opcional: scroll arriba
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+        cambiarPantallaActividad('detalle');}
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-
-
-});
