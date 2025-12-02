@@ -873,5 +873,233 @@ if (btnActividadContinuar) {
             }
         });
     }
+ // ==========================================
+    // 10. ELIMINAR RETOS EN PERFIL (PENDIENTES)
+    // ==========================================
+    
+    const modalEliminarPerfil = document.getElementById('modal-eliminar-actividad');
+    const spanNombreActividadPerfil = document.getElementById('nombre-actividad-borrar');
+    let itemPerfilParaBorrar = null;
+
+    // Detectar click en retos pendientes del perfil
+    document.addEventListener('click', (e) => {
+        const retoCard = e.target.closest('.reto-card[data-deletable="true"]');
+        
+        if (retoCard && document.getElementById('tab-progreso').classList.contains('active')) {
+            itemPerfilParaBorrar = retoCard;
+            const nombreReto = retoCard.getAttribute('data-nombre') || 
+                              retoCard.querySelector('.reto-titulo').textContent.trim();
+            
+            if (spanNombreActividadPerfil) spanNombreActividadPerfil.textContent = nombreReto;
+            if (modalEliminarPerfil) modalEliminarPerfil.classList.add('active');
+        }
+    });
+
+    // Reutilizamos el botón confirmar del modal existente
+    const btnConfirmarBorradoPerfil = document.getElementById('btn-confirmar-borrado');
+    
+    
+    // Variable global para controlar el contexto de eliminación
+    let esEliminacionDesdePerfil = false;
+
+    if (btnConfirmarBorradoPerfil) {
+        // Removemos listeners anteriores creando un clon
+        const nuevoBoton = btnConfirmarBorradoPerfil.cloneNode(true);
+        btnConfirmarBorradoPerfil.parentNode.replaceChild(nuevoBoton, btnConfirmarBorradoPerfil);
+        
+        nuevoBoton.addEventListener('click', () => {
+            // Verificar si es desde el perfil o desde retos
+            if (itemPerfilParaBorrar && document.getElementById('tab-progreso').classList.contains('active')) {
+                // Eliminación desde perfil
+                const nombreActividad = itemPerfilParaBorrar.getAttribute('data-nombre') || 
+                                       itemPerfilParaBorrar.querySelector('.reto-titulo').textContent.trim();
+
+                // Animación de salida
+                itemPerfilParaBorrar.style.transition = 'all 0.3s ease';
+                itemPerfilParaBorrar.style.opacity = '0';
+                itemPerfilParaBorrar.style.transform = 'translateX(20px)';
+                
+                setTimeout(() => {
+                    // Eliminar del perfil (vista principal)
+                    if (itemPerfilParaBorrar && itemPerfilParaBorrar.closest('#tab-progreso')) {
+                        itemPerfilParaBorrar.remove();
+                    }
+                    
+                    // Eliminar del modal Ver Más si está abierto
+                    const modalRetosListPerfil = document.getElementById('modal-retos-list-perfil');
+                    if (modalRetosListPerfil) {
+                        const retosEnModal = modalRetosListPerfil.querySelectorAll('.reto-card');
+                        retosEnModal.forEach(reto => {
+                            const tituloReto = reto.getAttribute('data-nombre') || 
+                                             reto.querySelector('.reto-titulo')?.textContent.trim();
+                            if (tituloReto === nombreActividad) {
+                                reto.remove();
+                            }
+                        });
+                    }
+                    
+                    // También eliminar del widget de retos si existe
+                    const itemsWidget = document.querySelectorAll('.progreso-item[data-deletable="true"]');
+                    itemsWidget.forEach(item => {
+                        const spanNombre = item.querySelector('.p-info span');
+                        if (spanNombre && spanNombre.textContent.trim() === nombreActividad) {
+                            item.remove();
+                        }
+                    });
+
+                    if (modalEliminarPerfil) modalEliminarPerfil.classList.remove('active');
+                    itemPerfilParaBorrar = null;
+                }, 300);
+            } else if (itemParaBorrar) {
+                // Eliminación desde retos (código original)
+                const nombreActividad = itemParaBorrar.querySelector('.p-info span').textContent.trim();
+
+                itemParaBorrar.style.transition = 'all 0.3s ease';
+                itemParaBorrar.style.opacity = '0';
+                itemParaBorrar.style.transform = 'translateX(20px)';
+                
+                setTimeout(() => {
+                    const todasLasActividades = document.querySelectorAll('.progreso-item');
+
+                    todasLasActividades.forEach(actividad => {
+                        const spanNombre = actividad.querySelector('.p-info span');
+                        if (spanNombre && spanNombre.textContent.trim() === nombreActividad) {
+                            actividad.remove();
+                        }
+                    });
+
+                    if (modalEliminarPerfil) modalEliminarPerfil.classList.remove('active');
+                    itemParaBorrar = null;
+                }, 300);
+            }
+        });
+    }
+
+    // ==========================================
+    // 11. BOTÓN "VER MÁS" EN PERFIL
+    // ==========================================
+    
+    const modalVerMasPerfil = document.getElementById('modal-ver-mas-perfil');
+    const btnCerrarVerMasPerfil = document.getElementById('btn-cerrar-ver-mas-perfil');
+    const btnCerrarVerMasPerfilAccion = document.getElementById('btn-cerrar-ver-mas-perfil-accion');
+    const tituloModalPerfil = document.getElementById('titulo-modal-perfil-progreso');
+    const modalRetosListPerfil = document.getElementById('modal-retos-list-perfil');
+
+    // Detectar click en botones "Ver más" del perfil
+    document.addEventListener('click', (e) => {
+        const btnVerMas = e.target.closest('.btn-ver-mas[data-tipo]');
+        
+        if (btnVerMas && document.getElementById('tab-progreso').classList.contains('active')) {
+            const tipo = btnVerMas.getAttribute('data-tipo');
+            const esPendiente = tipo === 'pendientes';
+            
+            // Cambiar título del modal
+            if (tituloModalPerfil) {
+                tituloModalPerfil.textContent = esPendiente ? 'Actividades Pendientes' : 'Actividades Completadas';
+            }
+            
+            // Obtener todos los retos del tipo correspondiente
+            const contenedor = esPendiente ? 
+                              document.getElementById('retos-pendientes-perfil') :
+                              document.getElementById('retos-completados-perfil');
+            
+            if (contenedor && modalRetosListPerfil) {
+                // Clonar todos los retos
+                modalRetosListPerfil.innerHTML = '';
+                const retos = contenedor.querySelectorAll('.reto-card');
+                
+                retos.forEach(reto => {
+                    const clone = reto.cloneNode(true);
+                    
+                    // Si es pendiente, mantener data-deletable para que sea clickeable
+                    if (!esPendiente) {
+                        clone.removeAttribute('data-deletable');
+                        clone.style.cursor = 'default';
+                    }
+                    
+                    modalRetosListPerfil.appendChild(clone);
+                });
+                
+                // Agregar más retos de ejemplo
+                agregarRetosEjemploPerfil(esPendiente);
+            }
+            
+            if (modalVerMasPerfil) modalVerMasPerfil.classList.add('active');
+        }
+    });
+
+    function agregarRetosEjemploPerfil(esPendiente) {
+        if (!modalRetosListPerfil) return;
+        
+        if (esPendiente) {
+            // Retos pendientes adicionales
+            const ejemplos = [
+                { titulo: 'Taller de compostaje casero', progreso: 15 },
+                { titulo: 'Almacena 4 pilas usadas', progreso: 25 },
+                { titulo: 'Lectura de cuidado de energia 2', progreso: 85 }
+            ];
+            
+            ejemplos.forEach(ejemplo => {
+                const div = document.createElement('div');
+                div.className = 'reto-card';
+                div.setAttribute('data-deletable', 'true');
+                div.setAttribute('data-nombre', ejemplo.titulo);
+                div.innerHTML = `
+                    <h4 class="reto-titulo">${ejemplo.titulo}</h4>
+                    <div class="reto-progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${ejemplo.progreso}%;"></div>
+                        </div>
+                    </div>
+                `;
+                modalRetosListPerfil.appendChild(div);
+            });
+        } else {
+            // Retos completados adicionales
+            const ejemplos = [
+                'Guardar agua en la ducha',
+                'Separar residuos orgánicos',
+                'Apagar luces innecesarias'
+            ];
+            
+            ejemplos.forEach(titulo => {
+                const div = document.createElement('div');
+                div.className = 'reto-card completado';
+                div.innerHTML = `
+                    <h4 class="reto-titulo">${titulo}</h4>
+                    <div class="reto-progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill completado" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                `;
+                modalRetosListPerfil.appendChild(div);
+            });
+        }
+    }
+
+    // Cerrar modal Ver Más Perfil con X
+    if (btnCerrarVerMasPerfil && modalVerMasPerfil) {
+        btnCerrarVerMasPerfil.addEventListener('click', () => {
+            modalVerMasPerfil.classList.remove('active');
+        });
+    }
+
+    // Cerrar modal Ver Más Perfil con botón "Volver"
+    if (btnCerrarVerMasPerfilAccion && modalVerMasPerfil) {
+        btnCerrarVerMasPerfilAccion.addEventListener('click', () => {
+            modalVerMasPerfil.classList.remove('active');
+        });
+    }
+
+    // Cerrar modal Ver Más Perfil clickeando fuera
+    if (modalVerMasPerfil) {
+        modalVerMasPerfil.addEventListener('click', (e) => {
+            if (e.target === modalVerMasPerfil) {
+                modalVerMasPerfil.classList.remove('active');
+            }
+        });
+    }
 }
+
 

@@ -998,9 +998,9 @@
                   <!-- Columna Pendientes -->
                   <div class="progreso-column">
                     <button class="progreso-tab-btn active">Pendientes</button>
-                    <div class="retos-list">
+                    <div class="retos-list" id="retos-pendientes-perfil">
                       <!-- Reto 1 -->
-                      <div class="reto-card">
+                      <div class="reto-card" data-deletable="true" data-nombre="Reciclar 5 botellas de plástico">
                         <h4 class="reto-titulo">Reciclar 5 botellas de plástico</h4>
                         <div class="reto-progress-wrapper">
                           <div class="progress-bar">
@@ -1010,7 +1010,7 @@
                       </div>
 
                       <!-- Reto 2 -->
-                      <div class="reto-card">
+                      <div class="reto-card" data-deletable="true" data-nombre="Lectura de cuidado de energía 1">
                         <h4 class="reto-titulo">Lectura de cuidado de energía 1</h4>
                         <div class="reto-progress-wrapper">
                           <div class="progress-bar">
@@ -1020,7 +1020,7 @@
                       </div>
 
                       <!-- Reto 3 -->
-                      <div class="reto-card">
+                      <div class="reto-card" data-deletable="true" data-nombre="Actividad familiar 1">
                         <h4 class="reto-titulo">Actividad familiar 1</h4>
                         <div class="reto-progress-wrapper">
                           <div class="progress-bar">
@@ -1029,13 +1029,13 @@
                         </div>
                       </div>
                     </div>
-                    <button class="btn-ver-mas">Ver más</button>
+                    <button class="btn-ver-mas" data-tipo="pendientes">Ver más</button>
                   </div>
 
                   <!-- Columna Completadas -->
                   <div class="progreso-column">
                     <button class="progreso-tab-btn active">Completadas</button>
-                    <div class="retos-list">
+                    <div class="retos-list" id="retos-completados-perfil">
                       <!-- Reto Completado 1 -->
                       <div class="reto-card completado">
                         <h4 class="reto-titulo">Reto diario 1</h4>
@@ -1066,7 +1066,7 @@
                         </div>
                       </div>
                     </div>
-                    <button class="btn-ver-mas">Ver más</button>
+                    <button class="btn-ver-mas" data-tipo="completados">Ver más</button>
                   </div>
                 </div>
               </div>
@@ -1384,7 +1384,7 @@
 <div class="modal-overlay" id="modal-ver-mas-progreso">
   <div class="modal-content">
     <div class="modal-header">
-      <h3>Tu Progreso Completo</h3>
+      <h3 id="titulo-modal-progreso">Tu Progreso Completo</h3>
       <button class="btn-cancelar" id="btn-cerrar-ver-mas" style="font-size: 1.5rem; line-height: 0.5;">&times;</button>
     </div>
     
@@ -1407,12 +1407,12 @@
         </div>
 
         <div class="progreso-item">
-          <div class="p-info"><span>Taller de reciclaje avanzado</span></div>
+          <div class="p-info"><span>Reciclaje avanzado</span></div>
           <div class="p-bar-bg"><div class="p-bar-fill" style="width: 10%;"></div></div>
         </div>
 
         <div class="progreso-item">
-          <div class="p-info"><span>Documental: Océanos de plástico</span></div>
+          <div class="p-info"><span>Lectura de cuidado de energia 2</span></div>
           <div class="p-bar-bg"><div class="p-bar-fill" style="width: 90%;"></div></div>
         </div>
         
@@ -1421,6 +1421,26 @@
     
     <div class="modal-footer">
        <button class="btn-modal-primary" id="btn-cerrar-ver-mas-accion">Volver</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ver Más - PERFIL -->
+<div class="modal-overlay" id="modal-ver-mas-perfil">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="titulo-modal-perfil-progreso">Actividades Pendientes</h3>
+      <button class="btn-cancelar" id="btn-cerrar-ver-mas-perfil" style="font-size: 1.5rem; line-height: 0.5;">&times;</button>
+    </div>
+    
+    <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+      <div class="retos-list" id="modal-retos-list-perfil">
+        <!-- Se llenará dinámicamente -->
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+       <button class="btn-modal-primary" id="btn-cerrar-ver-mas-perfil-accion">Volver</button>
     </div>
   </div>
 </div>
